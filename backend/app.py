@@ -1,15 +1,22 @@
-from flask import Flask, jsonify
-from flask_cors import CORS
-from .database import init_db
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Depends
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+from database.database import init_db
 
-app = Flask(__name__)
-CORS(app)
+app = FastAPI(title="TuneEcho API", version="1.0.0")
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()  
+    yield 
+
+# ----- Endpoints -----
 @app.get("/")
+def home():
+    return {"message": "Hello from FastAPI 🚀"}
+
+@app.get("/health")
 def health():
     return {"status": "ok"}
 
-@app.post("/init")
-def init():
-    init_db()
-    return {"status": "db initialized"}
