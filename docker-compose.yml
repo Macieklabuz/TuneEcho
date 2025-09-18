@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: tuneecho
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_PATH=sqlite:////app/data/fingerprints.db
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
