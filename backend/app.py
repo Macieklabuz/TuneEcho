@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from database.database import init_db
+from src.database.database import init_db
 
 app = FastAPI(title="TuneEcho API", version="1.0.0")
 
